@@ -1,0 +1,36 @@
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #100d28;
+
+  h1 {
+    color: #ffffff;
+    font-size: 5rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.login-box {
+  background: linear-gradient(to bottom, #5604dd, #ff66c4);
+  padding: 2rem;
+  border-radius: 20px;
+  width: 400px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+
+  input, select {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.8);
+  }
+
+  .login-button {
+    @extend .login-button; // Reusa o estilo do botão da home
+    width: 100%;
+  }
+}

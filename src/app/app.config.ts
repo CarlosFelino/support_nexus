@@ -1,14 +1,8 @@
+// src/app/app.config.ts
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { routes } from './app.routes';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideHttpClient } from '@angular/common/http';
-
+import { routes } from './app.routes';  // Agora vai funcionar pois routes está exportado
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideRouter(routes),
-    provideAnimations(), // Necessário para animações do Material
-    provideHttpClient() // Se você for fazer chamadas HTTP
-  ]
+  providers: [provideRouter(routes)]
 };

@@ -1,48 +1,36 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../../../core/auth/auth.service';
-import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { ProfileModalComponent } from '../modals/profile-modal/profile-modal.component';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
-  standalone: true,
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
+  standalone: true,
+  imports: [CommonModule, NgClass]
 })
-export class NavbarComponent {
-  isDropdownOpen = false;
-  sidebarOpen = false; // Adicionado para controlar o menu lateral
+export class NavbarComponent implements OnInit {
+  isSystemPage: boolean = false;
+  user = {
+    nome: 'Carlos Alexandre', // Mockado - substitua pelo dado real
+    email: 'carlos@fatec.sp.gov.br',
+    foto: 'assets/images/avatars/carlos.png'
+  };
 
-  get currentUser() {
-    return this.authService.currentUser();
-  }
+  constructor(private router: Router) {}
 
-  constructor(
-    public authService: AuthService,
-    private router: Router,
-    private dialog: MatDialog
-  ) {}
-
-  toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
+  ngOnInit() {
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.isSystemPage = !['/', '/login'].includes(event.url);
+      });
   }
 
   toggleSidebar() {
-    this.sidebarOpen = !this.sidebarOpen;
-    // Implemente a lógica do menu lateral aqui
-    console.log('Sidebar state:', this.sidebarOpen);
-  }
-
-  openProfileModal() {
-    this.dialog.open(ProfileModalComponent, {
-      width: '400px',
-      data: { user: this.currentUser }
-    });
-  }
-
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+    // Lógica para abrir/fechar sidebar (implemente conforme necessidade)
+    console.log('Sidebar toggled');
   }
 }

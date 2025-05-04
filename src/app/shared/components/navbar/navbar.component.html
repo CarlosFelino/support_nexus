@@ -1,29 +1,22 @@
-<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
-  <div class="container-fluid">
-    <!-- Botão das 3 barrinhas -->
-    <button class="navbar-toggler" type="button" (click)="toggleSidebar()">
-      <span class="navbar-toggler-icon"></span>
+<nav class="navbar" [ngClass]="{'navbar-system': isSystemPage}">
+  <!-- Ícone de menu (aparece apenas no sistema) -->
+  <div class="navbar-left" *ngIf="isSystemPage">
+    <button (click)="toggleSidebar()">
+      <i class="fas fa-bars"></i>
     </button>
+  </div>
 
-    <!-- Logo -->
-    <a class="navbar-brand mx-auto" routerLink="/">
-      <img src="assets/logo.png" alt="Logo" width="30" height="30">
-      Support Nexus
-    </a>
+  <!-- Logo (sempre visível) -->
+  <div class="navbar-center">
+    <img src="../../../assets/images/logo.png" alt="Support Nexus" class="logo">
+  </div>
 
-    <!-- Foto do usuário (com verificação de currentUser) -->
-    <div class="dropdown" *ngIf="authService.isLoggedIn()">
-      <a class="nav-link dropdown-toggle" (click)="toggleDropdown()">
-        <img [src]="currentUser?.photoUrl || 'assets/default-user.png'" 
-             width="30" 
-             height="30" 
-             class="rounded-circle">
-      </a>
-      <ul class="dropdown-menu dropdown-menu-end" [class.show]="isDropdownOpen">
-        <li><a class="dropdown-item" (click)="openProfileModal()">Editar Perfil</a></li>
-        <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" (click)="logout()">Sair</a></li>
-      </ul>
+  <!-- Perfil (aparece apenas no sistema) -->
+  <div class="navbar-right" *ngIf="isSystemPage">
+    <div class="user-info">
+      <span class="user-name">{{ user.nome }}</span>
+      <span class="user-email">{{ user.email }}</span>
     </div>
+    <img [src]="user.foto || 'assets/images/default-avatar.png'" class="user-avatar">
   </div>
 </nav>

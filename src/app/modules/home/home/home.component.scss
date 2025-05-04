@@ -1,0 +1,51 @@
+@use '../../../assets/scss/variables' as vars;
+
+.home-container {
+  background: vars.$primary;
+  height: 100vh;
+  color: vars.$text-light;
+  display: flex;
+  flex-direction: column;
+
+  main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5%;
+    flex-grow: 1;
+
+    .content {
+      max-width: 50%;
+
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 2rem;
+      }
+    }
+
+    .login-button {
+      background: linear-gradient(90deg, #8906e6 0%, #ff00e2 100%);
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      color: #0f1819;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    .image img {
+      max-height: 60vh;
+      animation: float 3s ease-in-out infinite;
+    }
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
