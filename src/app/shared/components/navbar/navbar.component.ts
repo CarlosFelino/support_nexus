@@ -2,35 +2,39 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
-import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
   standalone: true,
-  imports: [CommonModule, NgClass]
+  imports: [CommonModule]
 })
 export class NavbarComponent implements OnInit {
-  isSystemPage: boolean = false;
+  isSystemPage = false;
   user = {
-    nome: 'Carlos Alexandre', // Mockado - substitua pelo dado real
+    nome: 'Carlos Alexandre',
     email: 'carlos@fatec.sp.gov.br',
-    foto: 'assets/images/avatars/carlos.png'
+    foto: 'assets/images/default-avatar.png' // Imagem padrão
   };
+
+  // Lista de rotas onde o navbar completo aparece
+  private systemRoutes = ['/admin', '/professor'];
 
   constructor(private router: Router) {}
 
   ngOnInit() {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: any) => {
-        this.isSystemPage = !['/', '/login'].includes(event.url);
+      .subscribe((event: NavigationEnd) => {
+        this.isSystemPage = this.systemRoutes.some(route => 
+          event.urlAfterRedirects.startsWith(route)
+        );
       });
   }
 
   toggleSidebar() {
-    // Lógica para abrir/fechar sidebar (implemente conforme necessidade)
+    // Implemente a lógica do sidebar aqui
     console.log('Sidebar toggled');
   }
 }
